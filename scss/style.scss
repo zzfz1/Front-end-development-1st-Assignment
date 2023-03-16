@@ -1,0 +1,42 @@
+@import "bootstrap/scss/bootstrap";
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  background-color: rgb(57, 94, 149);
+}
+
+.book {
+  background-color: white;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.book {
+  p {
+    span {
+      display: inline-block;
+      width: 130px;
+    }
+  }
+}
+
+.filters,
+.sortingOptions,
+.ageSpanFilters,
+.sortingOrders {
+  color: white;
+}
+
+label {
+  span {
+    padding-left: 20px;
+    display: inline-block;
+    width: 150px;
+  }
+}
