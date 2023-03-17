@@ -7,12 +7,17 @@
   </head>
 
   <body>
-    <main>
-      <div class="filters"></div>
-      <div class="sortingOptions"></div>
-      <div class="sortingOrders"></div>
-      <div class="priceSpanFilters"></div>
-      <div class="my-3 mx-5 row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3" id="bookList"></div>
+    <main class="container my-3 mx-md-5">
+      <div class="row row-cols-3 bg-light rounded mx-1">
+        <div class="filters col text-center"></div>
+        <div class="sortingOptions col text-center"></div>
+        <div class="sortingOrders col text-center"></div>
+      </div>
+      <div
+        class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mt-3"
+        id="bookList"
+      ></div>
+      <div class="mod"></div>
     </main>
     <script type="module" src="/js/main.js"></script>
   </body>

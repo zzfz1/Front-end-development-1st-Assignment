@@ -3,34 +3,36 @@ import { getJSON } from "./utils/getJSON";
 import * as bootstrap from "bootstrap";
 
 let books,
+  filteredBooks,
   currentFilter = "category",
   chosenCategoryFilter = "all",
+  chosenAuthorFilter = "all",
   maxPrice = 0,
   minPrice = 200,
   chosenPriceSpanFilter = [0, 200],
-  chosenSortOption,
+  chosenSortOption = "author",
   chosenSortOrder = 1,
   categories = [],
   authors = [];
 
 async function initial() {
   books = await getJSON("/json/books.json");
+  filteredBooks = books;
   getCategories();
   getAuthors();
   getPriceRange();
   addFilters();
-  addPriceFilters();
+  // addPriceFilters();
   addSortingOptions();
   addSortingOrders();
-  sortByAuthor(books);
+  addModal();
   displayBooks();
 }
 
 function sortByAuthor(books, order) {
+  // Technically, sorting by author should be alphabetical.
   books.sort(({ author: aAuthor }, { author: bAuthor }) =>
-    aAuthor.replace("Author", "") > bAuthor.replace("Author", "")
-      ? order
-      : -order
+    aAuthor > bAuthor ? order : -order
   );
 }
 
@@ -116,24 +118,37 @@ function addFilters() {
         <option>price</option>
       </select> :
       <select class="filteringCondition">
-      <option>all</option>
-      ${categories.map((category) => `<option>${category}</option>`).join("")}
-      </select>
+        <option>all</option>
+        ${categories.map((category) => `<option>${category}</option>`).join("")}
       </select>
     </label>
   `;
   document.querySelector(".filter").addEventListener("change", (event) => {
     // get the selected category
     currentFilter = event.target.value;
+    filteredBooks = books;
     if (currentFilter === "category") {
       document.querySelector(".filteringCondition").innerHTML = `
-      <option>all</option>
-      ${categories.map((category) => `<option>${category}</option>`).join("")}`;
+        <option>all</option>
+        ${categories
+          .map((category) => `<option>${category}</option>`)
+          .join("")}`;
     } else if (currentFilter === "author") {
       document.querySelector(".filteringCondition").innerHTML = `
-      <option>all</option>
-      ${authors.map((author) => `<option>${author}</option>`).join("")}`;
+        <option>all</option>
+        ${authors.map((author) => `<option>${author}</option>`).join("")}`;
     } else if (currentFilter === "price") {
+      document.querySelector(".filteringCondition").innerHTML = `
+          <option>all</option>;
+          ${range(minPrice, maxPrice, 40)
+            .map(
+              (minPrice) =>
+                `<option>${minPrice} - ${
+                  minPrice + 39 > maxPrice ? maxPrice : minPrice + 39
+                }</option>`
+            )
+            .join("")}
+        `;
     }
     displayBooks();
   });
@@ -144,6 +159,28 @@ function addFilters() {
       if (currentFilter === "category") {
         // get the selected category
         chosenCategoryFilter = event.target.value;
+        filteredBooks = books.filter(
+          ({ category }) =>
+            chosenCategoryFilter === "all" || chosenCategoryFilter === category
+        );
+      } else if (currentFilter === "author") {
+        chosenAuthorFilter = event.target.value;
+        filteredBooks = books.filter(
+          ({ author }) =>
+            chosenAuthorFilter === "all" || chosenAuthorFilter === author
+        );
+      } else if (currentFilter === "price") {
+        chosenPriceSpanFilter =
+          event.target.value === "all"
+            ? [minPrice, maxPrice]
+            : event.target.value.split(" - ");
+        filteredBooks = books.filter(
+          ({ price }) =>
+            (chosenPriceSpanFilter[0] === minPrice &&
+              chosenPriceSpanFilter[1] === maxPrice) ||
+            (price >= chosenPriceSpanFilter[0] &&
+              price <= chosenPriceSpanFilter[1])
+        );
       }
       displayBooks();
     });
@@ -155,49 +192,7 @@ function range(start, stop, step = 1) {
     .map((x, y) => x + y * step);
 }
 
-function addPriceFilters() {
-  // create and display html
-  document.querySelector(".priceSpanFilters").innerHTML = /*html*/ `
-    <label><span>Filter by price span:</span>
-      <select class="priceFilter">
-        <option>all</option>
-        ${range(minPrice, maxPrice, 40)
-          .map(
-            (minPrice) =>
-              `<option>${minPrice} - ${
-                minPrice + 39 > maxPrice ? maxPrice : minPrice + 39
-              }</option>`
-          )
-          .join("")}
-      </select>
-    </label>
-  `;
-  // add an event listener
-  document
-    .querySelector(".priceSpanFilters")
-    .addEventListener("change", (event) => {
-      // get the selected category
-      chosenPriceSpanFilter =
-        event.target.value === "all"
-          ? [minPrice, maxPrice]
-          : event.target.value.split(" - ");
-      displayBooks();
-    });
-}
-
 function displayBooks() {
-  // filter according to category and call displayBooks
-  let filteredBooks = books
-    .filter(
-      ({ category }) =>
-        chosenCategoryFilter === "all" || chosenCategoryFilter === category
-    )
-    .filter(
-      ({ price }) =>
-        (chosenPriceSpanFilter[0] === minPrice &&
-          chosenPriceSpanFilter[1] === maxPrice) ||
-        (price >= chosenPriceSpanFilter[0] && price <= chosenPriceSpanFilter[1])
-    );
   if (chosenSortOption === "Author") {
     sortByAuthor(filteredBooks, chosenSortOrder);
   }
@@ -225,30 +220,6 @@ function displayBooks() {
   `
   );
   document.querySelector("#bookList").innerHTML = htmlArray.join("");
-  document.querySelector("main").innerHTML += `
-  <!-- Modal -->
-  <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="title"</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <table class="table table-bordered text-center">
-            <tr><th>id</th><td id="id"></td></tr>  
-            <tr><th>Author</th><td id="author"></td></tr>
-            <tr><th>Description</th><td id="description"></td></tr>
-            <tr><th>Category</th><td id="category"}></td></tr>
-            <tr><th>Price</th><td id="price"></td></tr>
-          </table>
-          <h3>Book Cover</h3>
-          <image id="cover" src="" class="rounded img-thumbnail">
-        </div>
-      </div>
-    </div>
-  </div>
-  `;
   document.querySelectorAll(".books").forEach((element) =>
     element.addEventListener("click", (event) => {
       let target = event.target;
@@ -267,6 +238,33 @@ function displayBooks() {
         .setAttribute("src", `/images/${target.dataset.id}.jpg`);
     })
   );
+}
+
+function addModal() {
+  document.querySelector(".mod").innerHTML = `
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="title"</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table table-bordered text-center">
+              <tr><th>id</th><td id="id"></td></tr>  
+              <tr><th>Author</th><td id="author"></td></tr>
+              <tr><th>Description</th><td id="description"></td></tr>
+              <tr><th>Category</th><td id="category"}></td></tr>
+              <tr><th>Price</th><td id="price"></td></tr>
+            </table>
+            <h3>Book Cover</h3>
+            <image id="cover" src="" class="rounded img-thumbnail">
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
 }
 
 initial();
