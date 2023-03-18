@@ -6,19 +6,24 @@
     <title>Book Store</title>
   </head>
 
-  <body>
-    <main class="container my-3 mx-md-5">
-      <div class="row row-cols-3 bg-light rounded mx-1">
-        <div class="filters col text-center"></div>
-        <div class="sortingOptions col text-center"></div>
-        <div class="sortingOrders col text-center"></div>
-      </div>
-      <div
-        class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mt-3"
-        id="bookList"
-      ></div>
-      <div class="mod"></div>
-    </main>
+  <body class="container my-3 mx-md-5">
+    <header
+      class="d-flex flex-column flex-sm-row justify-content-around bg-light rounded mx-1"
+    >
+      <div class="filters text-center align-middle"></div>
+      <div class="sortingOptions text-center"></div>
+      <div class="sortingOrders text-center"></div>
+      <button
+        class="btn btn-outline d-flex justify-content-center align-items-center py-0"
+        id="cartButton"
+      ></button>
+    </header>
+    <section
+      class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-3 mt-3"
+      id="bookList"
+    ></section>
+    <div class="cart"></div>
+    <div class="mod"></div>
     <script type="module" src="/js/main.js"></script>
   </body>
 </html>

@@ -10,9 +10,10 @@ let books,
   maxPrice = 0,
   minPrice = 200,
   chosenPriceSpanFilter = [0, 200],
-  chosenSortOption = "author",
+  chosenSortOption = "Author",
   chosenSortOrder = 1,
   categories = [],
+  cart = {},
   authors = [];
 
 async function initial() {
@@ -22,10 +23,10 @@ async function initial() {
   getAuthors();
   getPriceRange();
   addFilters();
-  // addPriceFilters();
   addSortingOptions();
   addSortingOrders();
   addModal();
+  addCart();
   displayBooks();
 }
 
@@ -101,15 +102,6 @@ function getPriceRange() {
 }
 
 function addFilters() {
-  // create and display html
-  // document.querySelector(".filters").innerHTML = /*html*/ `
-  //   <label><span>Filter by categories:</span>
-  //     <select class="categoryFilter">
-  //       <option>all</option>
-  //       ${categories.map((category) => `<option>${category}</option>`).join("")}
-  //     </select>
-  //   </label>
-  // `;
   document.querySelector(".filters").innerHTML = /*html*/ `
     <label><span>Filter by </span>
       <select class="filter">
@@ -192,6 +184,41 @@ function range(start, stop, step = 1) {
     .map((x, y) => x + y * step);
 }
 
+function buy(bookID) {
+  cart[bookID] = (cart[bookID] || 0) + 1;
+  let quantity = cart[bookID];
+  let book = books.find(({ id }) => id == bookID);
+  let tableBody = document.querySelector(`.cartContent`);
+  let row = tableBody.querySelector(`tr[data-id="${bookID}"]`);
+  if (row) {
+    row.querySelector(".quantity").textContent = quantity;
+    row.querySelector(".rowSum").textContent =
+      quantity * parseInt(book["price"]);
+  } else {
+    row = document.createElement("tr");
+    row.setAttribute("data-id", bookID);
+    row.innerHTML = `
+        <td>${bookID}</td>
+        <td class="quantity">1</td>
+        <td>${book.price}</td>
+        <td class="rowSum">${book.price}</td>
+    `;
+
+    tableBody.append(row);
+  }
+  updateTotal();
+}
+
+function updateTotal() {
+  let tableBody = document.querySelector(`.cartContent`);
+  let total = 0;
+  let rowSums = tableBody.querySelectorAll(".rowSum");
+  rowSums.forEach((element) => {
+    total += parseInt(element.textContent);
+  });
+  document.querySelector(".total").textContent = total;
+}
+
 function displayBooks() {
   if (chosenSortOption === "Author") {
     sortByAuthor(filteredBooks, chosenSortOrder);
@@ -202,20 +229,23 @@ function displayBooks() {
   let htmlArray = filteredBooks.map(
     ({ id, title, author, description, category, price }) => /*html*/ `
     <div class="col">
-      <a data-bs-toggle="modal" data-bs-target="#modal" data-title=${title} data-id=${id} data-author=${author} data-description=${description} data-category=${category} data-price=${price}>
-        <div class="books card">
-          <h3 class="card-header">${title}</h3>
-          <div class="card-body">
-            <table class="table table-borderless">
-              <tr><th>id</th><td>${id}</td></tr>  
-              <tr><th>Author</th><td>${author}</td></tr>
-              <tr><th>Description</th><td>${description}</td></tr>
-              <tr><th>Category</th><td>${category}</td></tr>
-              <tr><th>Price</th><td>${price}</td></tr>
-            </table>
-          </div>
+        <div class="books card" data-id=${id}>
+          <a data-bs-toggle="modal" data-bs-target="#modal" data-title="${title}" data-id="${id}" data-author="${author}" data-description="${description}" data-category="${category}" data-price="${price}">
+            <h3 class="card-header">${title}</h3>
+            <div class="card-body py-0">
+              <table class="table table-borderless my-0">
+                <tr><th>id</th><td>${id}</td></tr>  
+                <tr><th>Author</th><td>${author}</td></tr>
+                <tr><th>Description</th><td style="white-space:nowrap; overflow:hidden; text-overflow: ellipsis; max-width: 100px;">${description}</td></tr>
+                <tr><th>Category</th><td>${category}</td></tr>
+                <tr><th>Price</th><td>${price}</td></tr>
+              </table>
+            </div>
+            </a>
+          <div class="card-footer">
+            <button class="btn btn-primary">Buy</button>
+          </div>  
         </div>
-      </a>
     </div>
   `
   );
@@ -236,8 +266,22 @@ function displayBooks() {
       document
         .querySelector("#cover")
         .setAttribute("src", `/images/${target.dataset.id}.jpg`);
+      document.querySelector("#buy").addEventListener("click", (event) => {
+        let bookID = target.dataset.id;
+        buy(bookID);
+      });
     })
   );
+  document.querySelectorAll(".card-footer .btn").forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      let target = event.target;
+      while (!target.dataset.id) {
+        target = target.parentNode;
+      }
+      let bookID = target.dataset.id;
+      buy(bookID);
+    });
+  });
 }
 
 function addModal() {
@@ -261,10 +305,61 @@ function addModal() {
             <h3>Book Cover</h3>
             <image id="cover" src="" class="rounded img-thumbnail">
           </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" id="buy">Buy</button>
+          </div>
         </div>
       </div>
     </div>
     `;
+}
+
+function addCart() {
+  document.querySelector(".cart").innerHTML = `
+  <div
+    class="offcanvas offcanvas-end"
+    tabindex="-1"
+    id="offcanvas"
+    aria-labelledby="offcanvasLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasLabel">
+        Shopping Cart
+      </h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+     <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody class="cartContent">
+            </tbody>
+        </table> 
+      <h5>In total: <span class="total"></span></h5>
+    </div>
+  </div>`;
+  let cartButton = document.querySelector("#cartButton");
+  cartButton.innerHTML = `
+    <img
+      src="/icons/shopping-cart-outline.svg"
+      alt="cart"
+      style="min-height: 25px; max-height: 50px; height: 80%"
+    />
+  `;
+  cartButton.setAttribute("data-bs-toggle", "offcanvas");
+  cartButton.setAttribute("data-bs-target", "#offcanvas");
+  cartButton.setAttribute("aria-controls", "offcanvas");
 }
 
 initial();

@@ -26,17 +26,7 @@ body {
   }
 }
 
-.filters,
-.sortingOptions,
-.ageSpanFilters,
-.sortingOrders {
-  color: white;
-}
-
-label {
-  span {
-    padding-left: 20px;
-    display: inline-block;
-    width: 150px;
-  }
+#cartButton {
+  min-height: 25px;
+  max-height: 50px;
 }
