@@ -1,9 +1,9 @@
 [
   {
     "id": 1,
-    "title": "Book1 Title",
-    "author": "Author1",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, enim! Explicabo maxime quia, vitae, tempore corrupti soluta tenetur in ipsum consequuntur nostrum rerum neque repudiandae officia quod eum possimus amet!",
+    "title": "HTML - an introduction",
+    "author": "Gin - Junxin Zheng",
+    "description": "HTML is a crucial tool to know and the basis of the internet, as a markup language used to generate web pages, it was a simple language that made creating web sites simple. <br><br>HTML tags are used for specifying the various parts of a web page. Each tag has a particular purpose, such as identifying paragraphs with the paragraph (p) tag or inserting pictures with the (img) tag. These tags allow us to arrange all the elements on the web page, making it more logical and user-friendly. <br><br>HTML code is simple to read and understand because it is organized simply and employs simple syntax. This also makes it simpler to change and maintain, which has helped to establish it as the basis for making web pages.<br><br>HTML elements are capable of having attributes that reveal further details about the element. For instance, the (img) element provides attributes like src, alt, width, and height that offer details about the displayed picture. A tag that opens an element will always have attributes. <br><br>A special type of attributes – data attributes, for holding additional information that is not included in the normal attributes, HTML elements may have data attributes added as special attributes. All of them begin by with “data-“. <br><br>Since they let you store unique information inside HTML elements that can be accessed and changed using JavaScript, data attributes are helpful with styling, you can also use them to create a template structure that can receive data during runtime. To read and write data attribute values in JavaScript, use the getAttribute() and setAttribute() functions.<br><br>Lastly, there are a few things to consideration while dealing with HTML. Although being a simple language, coding them correctly requires a basic grasp of tags and grammar. Also, it's critical to employ CSS and JavaScript to enhance web sites in order to create designs that are both aesthetically pleasing and user-friendly. In order to ensure that web pages are quickly found by users, accessibility and SEO optimization must be taken into account.",
     "category": "HTML",
     "price": 290
   },
@@ -65,9 +65,9 @@
   },
   {
     "id": 9,
-    "title": "Book9 Title",
-    "author": "Author9",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, enim! Explicabo maxime quia, vitae, tempore corrupti soluta tenetur in ipsum consequuntur nostrum rerum neque repudiandae officia quod eum possimus amet!",
+    "title": "CSS - an introduction",
+    "author": "Gin - Junxin Zheng",
+    "description": "CSS is a fundamental aspect of learning how to construct aesthetic websites. Cascading Style Sheets, or CSS, is a language used to specify how web pages are presented and structural layout, including the colors, fonts, and placement of HTML elements. <br><br>CSS operates by picking out certain HTML elements and styling them. Elements can be chosen in a number of ways, also known as selectors, such as by tag, class, ID, or attribute. After choosing an element, we may apply a variety of styles, such as background colors, text sizes, margins, and borders.<br><br>With cascading, CSS applies styles according to a certain hierarchy of priority. Selector specificity, which is determined by the quantity and type of selectors used to apply the style. The most specific elements are inline styles, followed by IDs, classes, and tags. If two or more selectors have the same specificity, the more recently specified one takes priority.<br><br>Layout is a crucial CSS technique. CSS offers a number of ways to arrange contents, including the use of floats, flexbox, and grid. Flexbox and grid enable more complicated layouts, whereas floats are used to arrange items horizontally. Contrary to grid, which enables two-dimensional layout with rows and columns, Flexbox is used to align items along a single axis, either horizontally or vertically.<br><br>In addition to standard CSS, there are also preprocessor languages like Sass and Less, which provide additional functionality and convenience. Preprocessors allow for the use of variables, functions, and nesting in CSS, making it easier to manage and maintain large CSS files.<br><br>With the help of the CSS preprocessor Sass, you can create more reusable and manageable CSS code by using programming features like variables, functions, and nesting. The ordinary CSS files that may be compiled by your web pages are created from sass files, which have the.scss extension.<br><br>The usage of variables is one of Sass's core features. The capacity to define a variable and use it repeatedly throughout your Sass code might make it simpler to alter a website's color scheme or other design components. To utilize the primary color, for instance, you might declare a $primary-color variable with the value #007bff and use it throughout your Sass code.<br><br>In conclusion, CSS is an powerful language for defining the visual style and organization of web pages. It offers a wide range of techniques and features for building responsive, interactive, and aesthetical websites. For a front-end student to create websites of the highest caliber, mastering CSS is necessary.",
     "category": "CSS",
     "price": 202
   },
@@ -113,7 +113,7 @@
   },
   {
     "id": 15,
-    "title": "Book15 Title",
+    "titlResponsivee": "Book15 Title",
     "author": "Author15",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, enim! Explicabo maxime quia, vitae, tempore corrupti soluta tenetur in ipsum consequuntur nostrum rerum neque repudiandae officia quod eum possimus amet!",
     "category": "CSS",
@@ -129,9 +129,9 @@
   },
   {
     "id": 17,
-    "title": "Book17 Title",
-    "author": "Author17",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, enim! Explicabo maxime quia, vitae, tempore corrupti soluta tenetur in ipsum consequuntur nostrum rerum neque repudiandae officia quod eum possimus amet!",
+    "title": "Responsive design with Bootstrap",
+    "author": "Gin - Junxin Zheng",
+    "description": "Responsive design, which enables websites to adjust to various screen sizes and devices, is another significant CSS concept. Media queries, which enable us to apply particular styles based on the device viewpoint width, are used to produce responsive design. To make our layouts more adaptable, we can also substitute relative units like percentages (%) and ems for fixed units like pixels. <br><br>Bootstrap is a popular front-end framework for building responsive and mobile-first web pages. It is based on HTML, CSS, and JavaScript, and includes pre-designed templates, components, and utilities that make it easy to create professional-looking websites. It provides numerous ready-to-go components and styles, helping us quickly develop a responsive web application. <br><br>Bootstrap includes a variety of utility classes that can be used to quickly add styles to your website. Some examples of utility classes include (text-center) for centering text, (bg-primary) for setting a background color, and (p-3) for adding padding to an element. <br><br>Bootstrap is designed to be mobile-first and responsive, meaning that your website will look good on a wide range of devices, from smartphones to large desktop screens. This is achieved through the use of media queries and the grid system. <br><br>Moreover, one of the greatest feature of Bootstrap is that it can be customized. Selectively use some of the components or styles to meet design requirements or personal preferences. <br><br>Bootstrap can be easily integrated with other front-end tools, such as jQuery, vue.js, react.js, angular.js. This makes it easy to add additional functionality to your website and create more complex interactions. <br><br>As a conclusion, Bootstrap makes responsive web design easier and more efficient. It can help us quickly build a webpage that adapts to different devices, and can be customized according to our own needs. For students like me, Bootstrap is a very good tool that can help us complete the task of web design more easily.",
     "category": "UX",
     "price": 164
   },
@@ -193,9 +193,9 @@
   },
   {
     "id": 25,
-    "title": "Book25 Title",
-    "author": "Author25",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, enim! Explicabo maxime quia, vitae, tempore corrupti soluta tenetur in ipsum consequuntur nostrum rerum neque repudiandae officia quod eum possimus amet!",
+    "title": "JavaScript - an introduction",
+    "author": "Gin - Junxin Zheng",
+    "description": "In order to create interactive and dynamic websites, JavaScript is the necessary programming language that front-end developers must be well-versed in. Everyone who works as a front-end developer should be familiar with the following essential ideas and methods:<br><br>1. Variables and Data Types<br><br>JavaScript uses variables to store and manipulate data. Variables can hold different types of data, such as strings, numbers, and booleans. In JavaScript, data types are dynamic, which means that the same variable can hold different types of data at different times.<br><br>2. Functions<br><br>Blocks of code called functions can be reused to carry out different tasks. They make it possible for programmers to create modular, maintainable programs. JavaScript functions may either be created as arrow functions or defined using the function keyword.<br><br>3. Arrays and Objects<br><br>Complex data structures like arrays and objects let programmers store and manage data collections. Lists of values are stored in arrays, whereas key-value pairs are kept in objects.<br><br>4. Control Flow Statements<br><br>Control flow statements are used to control the order in which statements are executed. JavaScript has several control flow statements, such as if/else statements, switch statements, and loops.<br><br>5. DOM Manipulation<br><br>The Document Object Model (DOM) is a programming interface for HTML and XML documents. JavaScript can be used to manipulate the DOM, allowing developers to create dynamic and interactive web pages.<br><br>6. Event Handling<br><br>JavaScript can be used to handle user events, such as mouse clicks and keyboard input. Event handlers are functions that are triggered when a specific event occurs.<br><br>7. Asynchronous Programming<br><br>Asynchronous programming is a technique used to handle time-consuming operations in JavaScript. Asynchronous functions allow the program to continue running while the operation is being performed, preventing the program from freezing or becoming unresponsive.<br><br>8. Error Handling<br><br>Error handling is an important part of any JavaScript program. Errors can occur for various reasons, such as user input errors or network failures. JavaScript provides several ways to handle errors, such as try/catch statements.<br><br>9. APIs and AJAX<br><br>Application Programming Interfaces (APIs) allow developers to access data and functionality from external services. AJAX (Asynchronous JavaScript and XML) is a technique used to send and receive data from a server without reloading the entire web page.<br><br>In addition to these core concepts and techniques, front-end developers should also be familiar with common JavaScript libraries and frameworks, such as jQuery, React, and Vue.js. These tools can help developers build more complex and sophisticated web applications.",
     "category": "JavaScript",
     "price": 282
   },

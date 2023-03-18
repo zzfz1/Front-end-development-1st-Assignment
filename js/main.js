@@ -11,7 +11,7 @@ let books,
   minPrice = 200,
   chosenPriceSpanFilter = [0, 200],
   chosenSortOption = "Author",
-  chosenSortOrder = 1,
+  chosenSortOrder = -1,
   categories = [],
   cart = {},
   authors = [];
@@ -65,7 +65,7 @@ function addSortingOrders() {
   <label><span>Sort Order:</span>
   <select class="sortOrder">
     <option>Ascending</option>
-    <option>Descending</option>
+    <option selected>Descending</option>
   </select>
   `;
   document.querySelector(".sortOrder").addEventListener("change", (event) => {
@@ -198,7 +198,7 @@ function buy(bookID) {
     row = document.createElement("tr");
     row.setAttribute("data-id", bookID);
     row.innerHTML = `
-        <td>${bookID}</td>
+        <td>${book.title}</td>
         <td class="quantity">1</td>
         <td>${book.price}</td>
         <td class="rowSum">${book.price}</td>
@@ -236,7 +236,10 @@ function displayBooks() {
               <table class="table table-borderless my-0">
                 <tr><th>id</th><td>${id}</td></tr>  
                 <tr><th>Author</th><td>${author}</td></tr>
-                <tr><th>Description</th><td style="white-space:nowrap; overflow:hidden; text-overflow: ellipsis; max-width: 100px;">${description}</td></tr>
+                <tr><th>Description</th><td class="text-truncate" style="max-width: 100px; max-height:25px;">${description.substring(
+                  0,
+                  40
+                )}</td></tr>
                 <tr><th>Category</th><td>${category}</td></tr>
                 <tr><th>Price</th><td>${price}</td></tr>
               </table>
@@ -259,7 +262,7 @@ function displayBooks() {
       document.querySelector("#title").textContent = target.dataset.title;
       document.querySelector("#id").textContent = target.dataset.id;
       document.querySelector("#author").textContent = target.dataset.author;
-      document.querySelector("#description").textContent =
+      document.querySelector("#description").innerHTML =
         target.dataset.description;
       document.querySelector("#category").textContent = target.dataset.category;
       document.querySelector("#price").textContent = target.dataset.price;
@@ -288,7 +291,7 @@ function addModal() {
   document.querySelector(".mod").innerHTML = `
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="title"</h1>
@@ -298,7 +301,7 @@ function addModal() {
             <table class="table table-bordered text-center">
               <tr><th>id</th><td id="id"></td></tr>  
               <tr><th>Author</th><td id="author"></td></tr>
-              <tr><th>Description</th><td id="description"></td></tr>
+              <tr><th>Description</th><td class="text-start" id="description"></td></tr>
               <tr><th>Category</th><td id="category"}></td></tr>
               <tr><th>Price</th><td id="price"></td></tr>
             </table>

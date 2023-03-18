@@ -7,26 +7,16 @@
 }
 
 body {
-  background-color: rgb(57, 94, 149);
-}
-
-.book {
-  background-color: white;
-  padding: 20px;
-  margin: 20px;
-  border-radius: 10px;
-}
-
-.book {
-  p {
-    span {
-      display: inline-block;
-      width: 130px;
-    }
-  }
+  background: fixed url("/images/bg.jpg");
 }
 
 #cartButton {
   min-height: 25px;
   max-height: 50px;
+}
+
+@media (min-width: 800px) {
+  #cover {
+    max-height: 800px;
+  }
 }
