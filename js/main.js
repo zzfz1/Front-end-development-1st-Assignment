@@ -183,7 +183,34 @@ function range(start, stop, step = 1) {
     .fill(start)
     .map((x, y) => x + y * step);
 }
-
+function removeOne(bookID) {
+  cart[bookID] = cart[bookID] - 1;
+  let quantity = cart[bookID];
+  let book = books.find(({ id }) => id == bookID);
+  let tableBody = document.querySelector(`.cartContent`);
+  let row = tableBody.querySelector(`tr[data-id="${bookID}"]`);
+  if (quantity === 0) {
+    row.remove();
+  } else {
+    row.querySelector(".quantity").textContent = quantity;
+    row.querySelector(".rowSum").textContent =
+      quantity * parseInt(book["price"]) + " Kr";
+  }
+  updateTotal();
+}
+function addOne(bookID) {
+  cart[bookID] = (cart[bookID] || 0) + 1;
+  let quantity = cart[bookID];
+  let book = books.find(({ id }) => id == bookID);
+  let tableBody = document.querySelector(`.cartContent`);
+  let row = tableBody.querySelector(`tr[data-id="${bookID}"]`);
+  if (row) {
+    row.querySelector(".quantity").textContent = quantity;
+    row.querySelector(".rowSum").textContent =
+      quantity * parseInt(book["price"]) + " Kr";
+  }
+  updateTotal();
+}
 function buy(bookID) {
   cart[bookID] = (cart[bookID] || 0) + 1;
   let quantity = cart[bookID];
@@ -193,19 +220,23 @@ function buy(bookID) {
   if (row) {
     row.querySelector(".quantity").textContent = quantity;
     row.querySelector(".rowSum").textContent =
-      quantity * parseInt(book["price"]);
+      quantity * parseInt(book["price"]) + " Kr";
   } else {
     row = document.createElement("tr");
     row.setAttribute("data-id", bookID);
-    row.innerHTML = `
+    row.innerHTML = /*HTML*/ `
         <td>${book.title}</td>
-        <td class="quantity">1</td>
+        <td><button class="minus button-sm">-</button><span class="quantity">1</span><button class="plus button-sm">+</button></td>
         <td>${book.price}</td>
-        <td class="rowSum">${book.price}</td>
+        <td class="rowSum">${book.price} Kr</td>
     `;
-
     tableBody.append(row);
+    row
+      .querySelector(".minus")
+      .addEventListener("click", () => removeOne(bookID));
+    row.querySelector(".plus").addEventListener("click", () => addOne(bookID));
   }
+
   updateTotal();
 }
 
@@ -241,7 +272,7 @@ function displayBooks() {
                   40
                 )}</td></tr>
                 <tr><th>Category</th><td>${category}</td></tr>
-                <tr><th>Price</th><td>${price}</td></tr>
+                <tr><th>Price</th><td>${price} Kr</td></tr>
               </table>
             </div>
             </a>
@@ -288,13 +319,13 @@ function displayBooks() {
 }
 
 function addModal() {
-  document.querySelector(".mod").innerHTML = `
+  document.querySelector(".mod").innerHTML = /*HTML*/ `
     <!-- Modal -->
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="title"</h1>
+            <h1 class="modal-title fs-5" id="title"></h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
@@ -302,11 +333,11 @@ function addModal() {
               <tr><th>id</th><td id="id"></td></tr>  
               <tr><th>Author</th><td id="author"></td></tr>
               <tr><th>Description</th><td class="text-start" id="description"></td></tr>
-              <tr><th>Category</th><td id="category"}></td></tr>
+              <tr><th>Category</th><td id="category"></td></tr>
               <tr><th>Price</th><td id="price"></td></tr>
             </table>
             <h3>Book Cover</h3>
-            <image id="cover" src="" class="rounded img-thumbnail">
+            <img id="cover" src="" class="rounded img-thumbnail">
           </div>
           <div class="modal-footer">
             <button class="btn btn-primary" id="buy">Buy</button>
@@ -318,7 +349,7 @@ function addModal() {
 }
 
 function addCart() {
-  document.querySelector(".cart").innerHTML = `
+  document.querySelector(".cart").innerHTML = /*HTML*/ `
   <div
     class="offcanvas offcanvas-end"
     tabindex="-1"
@@ -337,7 +368,7 @@ function addCart() {
       ></button>
     </div>
     <div class="offcanvas-body">
-     <table class="table">
+     <table class="table text-center">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -349,7 +380,7 @@ function addCart() {
             <tbody class="cartContent">
             </tbody>
         </table> 
-      <h5>In total: <span class="total"></span></h5>
+      <h5>In total: <span class="total">0</span> Kr</h5>
     </div>
   </div>`;
   let cartButton = document.querySelector("#cartButton");
