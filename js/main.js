@@ -275,8 +275,8 @@ function displayBooks() {
                 <tr><th>Price</th><td>${price} Kr</td></tr>
               </table>
             </div>
-            </a>
-          <div class="card-footer">
+          </a>
+          <div class="card-footer mt-auto">
             <button class="btn btn-primary">Buy</button>
           </div>  
         </div>
