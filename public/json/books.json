@@ -113,7 +113,7 @@
   },
   {
     "id": 15,
-    "titlResponsivee": "Book15 Title",
+    "title": "Book15 Title",
     "author": "Author15",
     "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, enim! Explicabo maxime quia, vitae, tempore corrupti soluta tenetur in ipsum consequuntur nostrum rerum neque repudiandae officia quod eum possimus amet!",
     "category": "CSS",
